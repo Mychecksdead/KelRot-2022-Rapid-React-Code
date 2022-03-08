@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-import org.photonvision.PhotonCamera;
 
+import org.photonvision.PhotonCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.commands.AlignCommand;
 import frc.robot.commands.Auto_two_balls;
@@ -30,15 +31,16 @@ import frc.robot.commands.UseShooters;
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final PhotonCamera camera = new PhotonCamera(VisionConstants.cameraName);
-    private final DriveBase drive = new DriveBase(camera);
+    private final DriveBase drive = new DriveBase();
     private final Joystick js = new Joystick(0);
-    private final Shooter shooter= new Shooter(drive);
+    private final Shooter shooter = new Shooter(drive, camera);
+    private final Intake intake = new Intake();
 
     private final DriveCommand driveCommand = new DriveCommand(drive, js);
     private final AlignCommand align = new AlignCommand(drive, camera);
-    private final UseShooters useShooters = new UseShooters(drive);
+    private final UseShooters useShooters = new UseShooters(drive, shooter);
 
-    private final Auto_two_balls two_balls = new Auto_two_balls(drive, js);
+    private final Auto_two_balls two_balls = new Auto_two_balls(drive, intake, shooter);
 
     private final Turn turn180degrees = new Turn(drive);
 

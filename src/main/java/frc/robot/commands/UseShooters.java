@@ -6,12 +6,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Shooter;
 
 public class UseShooters extends CommandBase {
     DriveBase m_drive;
+    Shooter m_shooter;
     double distToHub, rpm_setpoint;
-    public UseShooters(DriveBase drivo) {
+    public UseShooters(DriveBase drivo, Shooter shoter) {
         m_drive = drivo;
+        m_shooter = shoter;
     }
 
     // Called when the command is initially scheduled.
@@ -19,7 +22,7 @@ public class UseShooters extends CommandBase {
     public void initialize() {
         distToHub = -1;
         for(int i = 0; i < 10; ++i){
-            double dist = m_drive.getDistanceToHub();
+            double dist = m_shooter.getDistanceToHub();
             if(distToHub == -1 && dist != -1){
                 distToHub = dist;
                 break;
@@ -31,7 +34,7 @@ public class UseShooters extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        
+
     }
 
     // Called once the command ends or is interrupted.

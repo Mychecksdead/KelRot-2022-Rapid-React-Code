@@ -1,13 +1,16 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
+import frc.robot.Constants.VisionConstants;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import org.photonvision.PhotonUtils;
+import org.photonvision.PhotonCamera;
 
 public class Shooter extends SubsystemBase {
 
@@ -20,8 +23,11 @@ public class Shooter extends SubsystemBase {
     PIDController pcontrolbottom = new PIDController(0.0, 0.0, 0.0);
     DriveBase m_drive;
     
-    public Shooter(DriveBase drivo) {
+    PhotonCamera cam;
+    public double targetAlign = -1;
+    public Shooter(DriveBase drivo, PhotonCamera came) {
         m_drive = drivo;
+        cam = came;
     }
 
     @Override
@@ -40,6 +46,18 @@ public class Shooter extends SubsystemBase {
 
         motor1.set(ControlMode.PercentOutput,topoutput);
         motor2.set(ControlMode.PercentOutput,bottomoutput);
+    }
+
+    public double getDistanceToHub(){
+        var result = cam.getLatestResult();
+        if(result.hasTargets()){
+            return PhotonUtils.calculateDistanceToTargetMeters(
+                VisionConstants.CAMERA_HEIGHT_METERS,
+                VisionConstants.TARGET_HEIGHT_METERS,
+                VisionConstants.CAMERA_PITCH_RADIANS,
+                Units.degreesToRadians(result.getBestTarget().getPitch()));
+        }
+        return -1;
     }
 
     public boolean atSetpoint(){
