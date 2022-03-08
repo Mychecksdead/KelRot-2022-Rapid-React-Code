@@ -40,7 +40,7 @@ public class Shooter extends SubsystemBase {
         return encoderValues;
     }
 
-    public void useShooter(double setpoint) {
+    public void controlShooter(double setpoint) {
         double topoutput= feedforward.calculate(setpoint)+ pcontroltop.calculate(enc1.getRate(),setpoint);
         double bottomoutput= feedforward.calculate(setpoint)+ pcontrolbottom.calculate(enc1.getRate(),setpoint);
 
@@ -64,8 +64,18 @@ public class Shooter extends SubsystemBase {
         return pcontroltop.atSetpoint() && pcontrolbottom.atSetpoint();
     }
 
+    public void stopShooters() {
+        motor1.set(ControlMode.PercentOutput, 0);
+        motor2.set(ControlMode.PercentOutput, 0);
+    }
+
     public void encoderTest(){
         SmartDashboard.putNumber("üst", enc1.getRate());
         SmartDashboard.putNumber("alt", enc2.getRate());
+    }
+
+    public void resetEncoders(){
+        enc1.reset();
+        enc2.reset();
     }
 }

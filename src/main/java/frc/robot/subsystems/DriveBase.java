@@ -50,7 +50,7 @@ public class DriveBase extends SubsystemBase {
     }
 
     public void curvatureDrive(Joystick js){
-        drive.curvatureDrive(-js.getRawAxis(1),js.getRawAxis(4),js.getRawButton(5));
+        drive.curvatureDrive(-js.getRawAxis(1), js.getRawAxis(4), js.getRawButton(5));
     }
 
     public void arcadeDrive(double speed, double rotation){
@@ -59,10 +59,6 @@ public class DriveBase extends SubsystemBase {
 
     public double getAngle(){
         return -gyro.getAngle();
-    }
-
-    public double best_rpm_for_distance(double distance){
-        return 3169;
     }
 
     public void resetGyro(){

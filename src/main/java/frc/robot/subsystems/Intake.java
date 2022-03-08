@@ -5,17 +5,18 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class Intake extends SubsystemBase {
-    /** Creates a new Intake. */
+    VictorSPX intakeMotor = new VictorSPX(3); //duzelt
+
     public Intake() {}
 
     @Override
-    public void periodic() {
-      // This method will be called once per scheduler run
-    }
+    public void periodic() {}
     
     public void intakeRun(){
-        
-    }
+        intakeMotor.set(ControlMode.PercentOutput, 0.5);
+    } 
 }

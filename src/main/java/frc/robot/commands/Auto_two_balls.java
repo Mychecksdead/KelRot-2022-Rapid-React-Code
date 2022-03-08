@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Intake;
@@ -16,14 +18,18 @@ public class Auto_two_balls extends SequentialCommandGroup {
     private final DriveBase m_drive;
     private final Intake m_intake;
     private final Shooter m_shooter;
-    public Auto_two_balls(DriveBase drivo, Intake intoke, Shooter shoter) {
+    private final PhotonCamera m_camera;
+    public Auto_two_balls(DriveBase drivo, Intake intoke, Shooter shoter, PhotonCamera cam) {
         m_drive = drivo;
         m_intake = intoke;
         m_shooter = shoter;
+        m_camera = cam;
         addCommands(
-            new UseShooters(m_drive, m_shooter),
+            new TargetAlign(m_drive, m_camera),
+            new UseShooters(m_drive, m_shooter, 0),
             new Back(m_drive, m_intake, 120),
-            new UseShooters(m_drive, m_shooter)
+            new TargetAlign(m_drive, m_camera),
+            new UseShooters(m_drive, m_shooter, 0)
         );
     }
 }

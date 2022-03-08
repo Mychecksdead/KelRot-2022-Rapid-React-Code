@@ -16,7 +16,7 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 import frc.robot.Constants.VisionConstants;
-import frc.robot.commands.AlignCommand;
+import frc.robot.commands.TargetAlign;
 import frc.robot.commands.Auto_two_balls;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Turn;
@@ -37,10 +37,10 @@ public class RobotContainer {
     private final Intake intake = new Intake();
 
     private final DriveCommand driveCommand = new DriveCommand(drive, js);
-    private final AlignCommand align = new AlignCommand(drive, camera);
-    private final UseShooters useShooters = new UseShooters(drive, shooter);
+    private final TargetAlign align = new TargetAlign(drive, camera);
+    private final UseShooters useShooters = new UseShooters(drive, shooter, 0);
 
-    private final Auto_two_balls two_balls = new Auto_two_balls(drive, intake, shooter);
+    private final Auto_two_balls two_balls = new Auto_two_balls(drive, intake, shooter, camera);
 
     private final Turn turn180degrees = new Turn(drive);
 

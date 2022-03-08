@@ -9,15 +9,20 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Shooter;
 
 public class UseShooters extends CommandBase {
-    DriveBase m_drive;
-    Shooter m_shooter;
+    
+    double[] encvalues;
+    private final DriveBase m_drive;
+    private final Shooter m_shooter;
+    private final double m_output;
     double distToHub, rpm_setpoint;
-    public UseShooters(DriveBase drivo, Shooter shoter) {
+    public UseShooters(DriveBase drivo, Shooter shoter, double output) {
         m_drive = drivo;
         m_shooter = shoter;
+        m_output = output;
+        addRequirements(m_drive, m_shooter);
     }
 
-    // Called when the command is initially scheduled.
+    
     @Override
     public void initialize() {
         distToHub = -1;
@@ -28,13 +33,16 @@ public class UseShooters extends CommandBase {
                 break;
             }
         }
-        rpm_setpoint = m_drive.best_rpm_for_distance(distToHub);
+        //rpm_setpoint = ;
+        m_shooter.resetEncoders();
+        encvalues = m_shooter.getEncoderRate();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-
+        m_shooter.controlShooter(m_output);
+        m_shooter.encoderTest();
     }
 
     // Called once the command ends or is interrupted.
