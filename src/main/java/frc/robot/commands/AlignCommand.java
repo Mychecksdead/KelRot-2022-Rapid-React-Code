@@ -35,24 +35,23 @@ public class AlignCommand extends CommandBase {
         alignkI = Preferences.getDouble("alignkI", 0); 
         alignkD = Preferences.getDouble("alignkD", 0); 
         setpoint = Preferences.getDouble("alignsetpoint", 30);
-        anglepid= new PIDController(alignkP, 0, alignkD);
+        anglepid = new PIDController(alignkP, 0, alignkD);
         //anglepid.setSetpoint(setpoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        double range=0;
+        double range = 0;
         double rotation = 0;
         var result = cam.getLatestResult();
         if(result.hasTargets()){
             if(Math.abs(anglepid.getPositionError())<=3){
                 anglepid.setI(alignkI);
-              }
+            }
             rotation = anglepid.calculate(m_drive.getAngle(), result.getBestTarget().getYaw() + m_drive.getAngle());
             System.out.print("yaw:");
             System.out.println(result.getBestTarget().getYaw());
-           
         }
         else {
             System.out.println("No targets found!");
@@ -67,8 +66,7 @@ public class AlignCommand extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-      //return anglepid.atSetpoint();
-      return false;
+        return anglepid.atSetpoint();
     }
 
     // Called once after isFinished returns true

@@ -4,25 +4,35 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveBase;
 
 public class UseShooters extends CommandBase {
-    Shooter m_shooter;
-    /** Creates a new UseShooters. */
-    public UseShooters(Shooter shoter) {
-        m_shooter = shoter;
-        addRequirements(m_shooter);
-        // Use addRequirements() here to declare subsystem dependencies.
+    DriveBase m_drive;
+    double distToHub, rpm_setpoint;
+    public UseShooters(DriveBase drivo) {
+        m_drive = drivo;
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        distToHub = -1;
+        for(int i = 0; i < 10; ++i){
+            double dist = m_drive.getDistanceToHub();
+            if(distToHub == -1 && dist != -1){
+                distToHub = dist;
+                break;
+            }
+        }
+        rpm_setpoint = m_drive.best_rpm_for_distance(distToHub);
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {}
+    public void execute() {
+        
+    }
 
     // Called once the command ends or is interrupted.
     @Override
@@ -32,5 +42,6 @@ public class UseShooters extends CommandBase {
     @Override
     public boolean isFinished() {
         return false;
+        //2. ar off olana kadar
     }
 }
