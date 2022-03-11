@@ -11,13 +11,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.commands.TargetAlign;
-import frc.robot.commands.Auto_two_balls;
+import frc.robot.commands.Back;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Turn;
 import frc.robot.commands.UseShooters;
@@ -39,10 +40,18 @@ public class RobotContainer {
     private final DriveCommand driveCommand = new DriveCommand(drive, js);
     private final TargetAlign align = new TargetAlign(drive, camera);
     private final UseShooters useShooters = new UseShooters(drive, shooter, 0);
-
-    private final Auto_two_balls two_balls = new Auto_two_balls(drive, intake, shooter, camera);
-
+    private final Back back = new Back(drive, intake, 120);
+    
     private final Turn turn180degrees = new Turn(drive);
+
+
+    private final SequentialCommandGroup two_balls = new SequentialCommandGroup(
+        align,
+        useShooters,
+        back,
+        align,
+        useShooters
+    );
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -73,3 +82,4 @@ public class RobotContainer {
         return two_balls;
     }
 }
+

@@ -25,15 +25,16 @@ public class UseShooters extends CommandBase {
     
     @Override
     public void initialize() {
-        distToHub = -1;
-        for(int i = 0; i < 10; ++i){
+        //distToHub = -1;
+        /*for(int i = 0; i < 10; ++i){
             double dist = m_shooter.getDistanceToHub();
             if(distToHub == -1 && dist != -1){
                 distToHub = dist;
                 break;
             }
         }
-        //rpm_setpoint = ;
+        //rpm_setpoint = ;*/
+        //distToHub = 220;
         m_shooter.resetEncoders();
         encvalues = m_shooter.getEncoderRate();
     }

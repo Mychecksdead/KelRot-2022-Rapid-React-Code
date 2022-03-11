@@ -37,6 +37,10 @@ public final class Constants {
         public static final double two_ballP = 0;
         public static final double two_ballI = 0;
         public static final double two_ballD = 0;
+
+        public static final double BallkP = 0;
+        public static final double BallkI = 0;
+        public static final double BallkD = 0;
     }
 
     public static final class ShooterConstants{

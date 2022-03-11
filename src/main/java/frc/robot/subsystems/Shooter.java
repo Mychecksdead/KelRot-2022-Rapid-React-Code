@@ -41,11 +41,11 @@ public class Shooter extends SubsystemBase {
     }
 
     public void controlShooter(double setpoint) {
-        double topoutput= feedforward.calculate(setpoint)+ pcontroltop.calculate(enc1.getRate(),setpoint);
-        double bottomoutput= feedforward.calculate(setpoint)+ pcontrolbottom.calculate(enc1.getRate(),setpoint);
+        double topoutput = feedforward.calculate(setpoint)+ pcontroltop.calculate(enc1.getRate(),setpoint);
+        double bottomoutput = feedforward.calculate(setpoint)+ pcontrolbottom.calculate(enc1.getRate(),setpoint);
 
-        motor1.set(ControlMode.PercentOutput,topoutput);
-        motor2.set(ControlMode.PercentOutput,bottomoutput);
+        motor1.set(ControlMode.PercentOutput, topoutput);
+        motor2.set(ControlMode.PercentOutput, bottomoutput);
     }
 
     public double getDistanceToHub(){
