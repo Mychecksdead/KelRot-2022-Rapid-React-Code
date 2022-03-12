@@ -18,6 +18,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.commands.TargetAlign;
+
 import frc.robot.commands.Back;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.Turn;
@@ -40,17 +41,16 @@ public class RobotContainer {
     private final DriveCommand driveCommand = new DriveCommand(drive, js);
     private final TargetAlign align = new TargetAlign(drive, camera);
     private final UseShooters useShooters = new UseShooters(drive, shooter, 0);
-    private final Back back = new Back(drive, intake, 120);
     
     private final Turn turn180degrees = new Turn(drive);
 
 
     private final SequentialCommandGroup two_balls = new SequentialCommandGroup(
         align,
-        useShooters,
-        back,
+        new UseShooters(drive, shooter, 0),
+        new Back(drive, intake, 120),
         align,
-        useShooters
+        new UseShooters(drive, shooter, 0)
     );
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -67,8 +67,8 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        new JoystickButton(js , Button.kY.value).whenPressed(align);
-        new JoystickButton(js , Button.kX.value).whenPressed(turn180degrees);
+        new JoystickButton(js, Button.kY.value).whenPressed(align);
+        new JoystickButton(js, Button.kX.value).whenPressed(turn180degrees);
         new JoystickButton(js, Button.kB.value).whenPressed(useShooters);
     }
 
